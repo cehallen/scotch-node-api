@@ -1,0 +1,17 @@
+{
+  "name": "node-api-mine",
+  "version": "0.0.0",
+  "description": "copy node-api scotch.io app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ca",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "express": "^4.10.7",
+    "mongoose": "^3.8.21",
+    "morgan": "^1.5.1"
+  }
+}

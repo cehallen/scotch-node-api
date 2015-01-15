@@ -7,4 +7,3 @@ var BearSchema = new Schema({
 
 module.exports = mongoose.model('Bear', BearSchema);
 
-

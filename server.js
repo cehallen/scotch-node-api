@@ -13,15 +13,50 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/ca-test1');
 var Bear = require('./app/models/bear');
 
-var router = express.Router();
+var router = express.Router(); 
 
-// Test route tested with postman
-router.get('/', function(req, res) {
-  res.json({message: "hooray! welcome to this api!"});  
+router.use(function(req, res, next) {
+  console.log('something is happening.');
+  next();
 });
 
-// Majority routes here
+router.get('/', function(req, res) {
+  res.json({ message: "hooray! welcome to this api!" });  
+});
 
+router.route('/bears')
+  .post(function(req, res) {
+    var bear = new Bear();
+    bear.name = req.body.name;
+    bear.save(function(err) {
+      if (err) res.send(err);
+      res.json({ message: 'bear created!' });
+    });
+  })
+  .get(function(req, res) {
+    Bear.find(function(err, bears) {
+      if (err) res.send(err);
+      res.json(bears);
+    });
+  });
+
+router.route('/bears/:bear_id')
+  .get(function(req, res) {
+    Bear.findById(req.params.bear_id, function(err, bear) {
+      if (err) res.send(err);
+      res.json(bear);
+    });
+  })
+  .put(function(req, res) {
+    Bear.findById(req.params.bear_id, function(err, bear) {
+      if (err) res.send(err);
+      bear.name = req.body.name;
+      bear.save(function(err) {
+        if (err) res.send(err);
+        res.json({ message: 'bear updated!' });
+      });
+    });
+  });
 
 app.use('/api', router);
 

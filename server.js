@@ -56,6 +56,15 @@ router.route('/bears/:bear_id')
         res.json({ message: 'bear updated!' });
       });
     });
+  })
+  .delete(function(req, res) {
+    // you can also do this in the same syntax as above: find bear by id, and bear.remove...
+    Bear.remove({
+      _id: req.params.bear_id
+    }, function(err, bear) {
+      if (err) res.send(err);
+      res.json({ message: 'successfully deleted' });
+    });
   });
 
 app.use('/api', router);
